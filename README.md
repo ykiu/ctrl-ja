@@ -37,7 +37,7 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 
 スクリプトを停止するには <kbd>ctrl+C</kbd> を押します。スクリプトを停止すると <kbd>ctrl</kbd> キーの働きは元通りになります。
 
-## 使い方 (常用する)
+## 使い方 (常用する場合)
 
 このプログラムを常用する場合は、Windows のタスクスケジューラを使ってコンピューターの起動時に立ち上がるようにしておくと便利です。
 
