@@ -6,9 +6,7 @@
 
 Windows 10でテストしていますが、PowerShell がインストールされた Windows 環境であれば動くと思います。
 
-## 使い方 (お試し)
-
-インストールしなくても使用感を確かめることができます。
+## 実行方法
 
 ### 1. PowerShell を起動する
 
@@ -37,9 +35,30 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 
 スクリプトを停止するには <kbd>ctrl+C</kbd> を押します。スクリプトを停止すると <kbd>ctrl</kbd> キーの働きは元通りになります。
 
-## 使い方 (常用する場合)
+## タスクスケジューラに登録する
 
-このプログラムを常用する場合は、Windows のタスクスケジューラを使ってコンピューターの起動時に立ち上がるようにしておくと便利です。
+このプログラムを常用する場合は、Windows のタスクスケジューラを使ってコンピューターの起動時に立ち上がるようにしておくと便利です。以下の手順に従って本プログラムをタスクスケジューラに登録します。
+
+### 1. PowerShell を管理者権限で起動する
+
+### 2. このリポジトリのルートに移動する
+
+```powershell
+cd .\ctrl-ja\
+```
+
+### 3. 以下のスクリプトを貼り付ける
+
+```powershell
+$trigger = New-ScheduledTaskTrigger -AtLogon -User $env:USERNAME
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument ('-NoLogo -WindowStyle Hidden -Command "& {Add-Type -TypeDefinition (gc ' + (Resolve-Path .\ctrl-ja.cs) + ' -Raw) -ReferencedAssemblies System.Windows.Forms; [CtrlJa.Program]::Main();}"') -Id "ctrl-ja"
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -ExecutionTimeLimit (New-TimeSpan -Days 90)
+Register-ScheduledTask -TaskName "ctrl-ja" -Trigger $trigger -Action $action -Settings $settings -User $env:USERNAME
+```
+
+### (別法) タスクスケジューラの GUI から登録する
+
+タスクスケジューラの GUI からもプログラムを登録することができます。
 
 「ファイル名を指定して実行」に「taskschd.msc」と入力し、タスクスケジューラを開きます。
 
