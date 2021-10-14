@@ -4,6 +4,8 @@
 
 Windows 10 で動作確認済みです。
 
+制作過程などはこちら: [左右 Command キーで日本語入力をオフ/オンするやつの Windows 版を作った](https://zenn.dev/ykiu/articles/b67a0bdeecad0d)
+
 ## 実行方法
 
 ctrl-ja.cs をダウンロードし PowerShell で以下のスクリプトを実行すると、<kbd>ctrl</kbd> キーで IME の切り替えができるようになります。
